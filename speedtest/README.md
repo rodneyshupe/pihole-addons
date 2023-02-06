@@ -8,5 +8,5 @@ To execute this script you can either [download](https://raw.githubusercontent.c
 and execute the script. or just execute the following:
 
 ```sh
-curl https://raw.githubusercontent.com/rodneyshupe/pihole-addons/main/speedtest/install.sh | bash
+curl -sSL https://raw.githubusercontent.com/rodneyshupe/pihole-addons/main/speedtest/install.sh | bash
 ```
