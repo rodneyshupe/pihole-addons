@@ -31,13 +31,12 @@ function install_padd() {
 
     if confirm "Add auto start on auto login."; then
         if ! grep -q "padd.sh" /home/pihole/.bashrc; then
-            sudo tee -a curl -s -L https://raw.githubusercontent.com/rodneyshupe/pihole-addons/main/PADD/autologin.conf
-            curl -s -L https://raw.githubusercontent.com/rodneyshupe/pihole-addons/main/PADD/bashrc_snippet.sh | sudo tee /home/pihole/.bashrc
+            curl -sSL https://raw.githubusercontent.com/rodneyshupe/pihole-addons/main/PADD/bashrc_snippet.sh | sudo tee -a /home/pihole/.bashrc
         fi
         if [ ! -f /etc/systemd/system/getty@tty1.service.d/autologin.conf ]; then
             systemctl set-default multi-user.target
             ln -fs /lib/systemd/system/getty@.service /etc/systemd/system/getty.target.wants/getty@tty1.service
-            curl -s -L https://raw.githubusercontent.com/rodneyshupe/pihole-addons/main/PADD/autologin.conf | sudo tee /etc/systemd/system/getty@tty1.service.d/autologin.conf
+            curl -sSL https://raw.githubusercontent.com/rodneyshupe/pihole-addons/main/PADD/autologin.conf | sudo tee /etc/systemd/system/getty@tty1.service.d/autologin.conf
         fi
     fi
 }

@@ -128,7 +128,7 @@ function install_heimdall() {
     local ENV_FILE="$CONFIG_PATH/.env"
     create_env "$ENV_FILE" $APP_PORT $APP_PORT_SSL
 
-    curl -s -L https://raw.githubusercontent.com/rodneyshupe/pihole-addons/main/heimdall/docker-compose.yml --output $CONFIG_PATH/docker-compose.yml
+    curl -sSL https://raw.githubusercontent.com/rodneyshupe/pihole-addons/main/heimdall/docker-compose.yml --output $CONFIG_PATH/docker-compose.yml
 
     docker-compose -f $CONFIG_PATH/docker-compose.yml --env-file "$ENV_FILE" up -d
 }

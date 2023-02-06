@@ -23,7 +23,7 @@ function confirm() {
 echo "About to install Speedtest CLI."
 if confirm "Do you want to continue?"; then
     echo "Install Prerequisites"
-    curl -s https://packagecloud.io/install/repositories/ookla/speedtest-cli/script.deb.sh | sudo bash
+    curl -sSL https://packagecloud.io/install/repositories/ookla/speedtest-cli/script.deb.sh | sudo bash
 
     echo "Install Speedtest CLI"
     sudo apt update && sudo apt install -y speedtest >/dev/null

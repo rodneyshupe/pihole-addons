@@ -4,8 +4,9 @@ This script will install [Speedtest CLI from Ookla](https://www.speedtest.net/ap
 
 ## Install
 
-To execute this script you can either [download](https://raw.githubusercontent.com/rodneyshupe/pihole-addons/main/speedtest/setup.sh) and execute the script. or just execute the following:
+To execute this script you can either [download](https://raw.githubusercontent.com/rodneyshupe/pihole-addons/main/speedtest/install.sh)
+and execute the script. or just execute the following:
 
 ```sh
-curl https://raw.githubusercontent.com/rodneyshupe/pihole-addons/main/speedtest/setup.sh | bash
+curl https://raw.githubusercontent.com/rodneyshupe/pihole-addons/main/speedtest/install.sh | bash
 ```

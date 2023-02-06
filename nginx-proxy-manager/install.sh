@@ -105,7 +105,7 @@ function install_npm() {
     mkdir -p $CONFIG_PATH/data
     mkdir -p $CONFIG_PATH/letsencrypt
 
-    curl -s -L https://raw.githubusercontent.com/rodneyshupe/pihole-addons/main/nginx-proxy-manager/docker-compose.yml --output $CONFIG_PATH/docker-compose.yml
+    curl -sSL https://raw.githubusercontent.com/rodneyshupe/pihole-addons/main/nginx-proxy-manager/docker-compose.yml --output $CONFIG_PATH/docker-compose.yml
 
     # Create .env file
     echo "APPDATA_ROOT=$HOME/.config" >$CONFIG_PATH/.env
