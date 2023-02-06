@@ -18,8 +18,10 @@ function confirm() {
     echo -n "$prompt [$choice] " >&2
     read answer
 
+    [[ "$answer" == "" ]] && answer="$default"
+    
     case "$answer" in
-        Y|y|"")
+        Y|y)
             return 0
             ;;
         N|n)
