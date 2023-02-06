@@ -5,10 +5,19 @@ DEFAULT_APP_PORT_SSL=7443
 
 function confirm() {
     local prompt="$1"
-    local exit_on_no=${2:-false}
+    local default=${2:-Y}
+    local exit_on_no=${3:-false}
 
-    echo -n "$prompt [Y/n] " >&2
+    if [[ "$default" == "Y" ]]; then
+        choice="Y/n"
+    elif [[ "$default" == "N" ]]; then
+        choice="y/N"
+    else
+        choice="y/n"
+    fi
+    echo -n "$prompt [$choice] " >&2
     read answer
+
     case "$answer" in
         Y|y|"")
             return 0
@@ -23,7 +32,7 @@ function confirm() {
             ;;
         *)
             echo "Invalid response." >&2
-            return confirm "$prompt" "$exit_on_no"
+            return confirm "$prompt" "$default" "$exit_on_no"
             ;;
     esac
 }
@@ -144,7 +153,7 @@ function install_heimdall() {
 }
 
 echo "About to install the container for Heimdall"
-if confirm "Do you want to continue?"; then
+if confirm "Do you want to continue?" "N"; then
     if ! $(docker-compose -v >/dev/null 2>&1) ; then
         echo "Docker needs to be installed."
         echo ""
