@@ -13,5 +13,7 @@ independently or you can run the base setup script and be prompted for each appl
 ## Instructions
 
 ```sh
-curl -sSL https://raw.githubusercontent.com/rodneyshupe/pihole-addons/main/setup.sh | bash
+curl -sSL https://raw.githubusercontent.com/rodneyshupe/pihole-addons/main/setup.sh --output addon_setup.sh
+chmod +x addon_setup.sh
+./addon_setup.sh
 ```
