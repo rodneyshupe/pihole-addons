@@ -53,8 +53,8 @@ function get_port() {
                 if port_in_use $port; then
                     echo "Port $port is in use. Please choose another port." >&2
                 else
-                    echo "Selected port: $port" >&2
-                    read -p "Is this the correct port? [Y/n] " answer
+                    echo -e -n "Selected port: $port\nIs this the correct port? [Y/n]" >&2
+                    read answer
                     case "$answer" in
                         Y|y|"")
                             break
