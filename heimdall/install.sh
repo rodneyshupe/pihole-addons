@@ -6,7 +6,7 @@ DEFAULT_APP_PORT_SSL=7443
 function confirm() {
     local prompt="$1"
     local exit_on_no=${2:-false}
-    
+
     read -p "$prompt [Y/n] " answer
     case "$answer" in
         Y|y|"")
@@ -48,7 +48,7 @@ function get_port() {
             if [ "$port" -eq 80 ] || [ "$port" -eq 443 ]; then
                 echo "Port 80 and 443 are not allowed."
             else
-                if port_in_use $port >/dev/null 2>&1; then
+                if port_in_use $port; then
                     echo "Port $port is in use. Please choose another port."
                 else
                     echo "Selected port: $port"
@@ -114,13 +114,13 @@ function install_heimdall() {
 
     local APP_PORT=80
     local APP_PORT_SSL=443
-    if lsof | grep -i :"$APP_PORT" >/dev/null 2>&1; then
+    if port_in_use $APP_PORT; then
         echo "Port $APP_PORT is in use. Select a new HTTP port for Heimdall."
         APP_PORT=$(get_port $DEFAULT_APP_PORT)
     else
         echo "Using HTTP port $APP_PORT"
     fi
-    if lsof | grep -i :"$APP_PORT" >/dev/null 2>&1; then
+    if port_in_use $APP_PORT_SSL; then
         echo "Port $APP_PORT_SSL is in use. Select a new HTTPS port for Heimdall."
         APP_PORT_SSL=$(get_port $DEFAULT_APP_PORT_SSL)
     else
