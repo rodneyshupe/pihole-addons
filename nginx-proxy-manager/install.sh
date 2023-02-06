@@ -53,17 +53,18 @@ function get_port() {
     local default_port=${1:-$DEFAULT_NEW_PIHOLE_PORT}
     local port
     while true; do
-        read -p "Enter port new number [$default_port]: " port
+        echo -n "Enter port new number [$default_port]: " >&2
+        read port
         port=${port:-$default_port}
         if [[ "$port" =~ ^[0-9]+$ ]]; then
             if [ "$port" -eq 80 ] || [ "$port" -eq 81 ] || [ "$port" -eq 443 ]; then
-                echo "Port 80, 81 and 443 are not allowed." >&2
+                echo "Ports 80, 81 and 443 are not allowed." >&2
             else
-                if port_in_use "$port"; then
+                if port_in_use $port; then
                     echo "Port $port is in use. Please choose another port." >&2
                 else
-                    echo "Selected port: $port" >&2
-                    read -p "Is this the correct port? [Y/n] " answer
+                    echo -e -n "Selected port: $port\nIs this the correct port? [Y/n]" >&2
+                    read answer
                     case "$answer" in
                         Y|y|"")
                             break
@@ -72,7 +73,7 @@ function get_port() {
                             continue
                             ;;
                         *)
-                            echo "Invalid response."
+                            echo "Invalid response." >&2
                             ;;
                     esac
                 fi
@@ -81,7 +82,7 @@ function get_port() {
             echo "Invalid port number. Please enter a number." >&2
         fi
     done
-    echo "$answer"
+    echo "$port"
 }
 
 function install_docker() {
