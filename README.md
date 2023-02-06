@@ -13,5 +13,5 @@ independently or you can run the base setup script and be prompted for each appl
 ## Instructions
 
 ```sh
-curl -sSL https://raw.githubusercontent.com/rodneyshupe/pihole-addons/main/speedtest/install.sh | bash
+curl -sSL https://raw.githubusercontent.com/rodneyshupe/pihole-addons/main/setup.sh | bash
 ```
