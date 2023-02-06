@@ -5,16 +5,21 @@ DEFAULT_APP_PORT_SSL=7443
 
 function confirm() {
     local prompt="$1"
+    local exit_on_no=${2:-false}
     read -p "$prompt [Y/n] " answer
     case "$answer" in
         Y|y|"")
             return 0;;
         N|n)
-            echo "Exiting."
-            exit 1;;
+            if $exit_on_no; then
+                echo "Exit!"
+                exit 1;;
+            else
+                return 1;;
+            fi
         *)
             echo "Invalid response."
-            confirm "$prompt";;
+            return confirm "$prompt" "$exit_on_no";;
     esac
 }
 
@@ -123,7 +128,7 @@ function install_heimdall() {
     local ENV_FILE="$CONFIG_PATH/.env"
     create_env "$ENV_FILE" $APP_PORT $APP_PORT_SSL
 
-    curl -L https://raw.githubusercontent.com/rodneyshupe/pihole-addons/main/heimdall/docker-compose.yml --output $CONFIG_PATH/docker-compose.yml
+    curl -s -L https://raw.githubusercontent.com/rodneyshupe/pihole-addons/main/heimdall/docker-compose.yml --output $CONFIG_PATH/docker-compose.yml
 
     docker-compose -f $CONFIG_PATH/docker-compose.yml --env-file "$ENV_FILE" up -d
 }
@@ -131,15 +136,17 @@ function install_heimdall() {
 if ! $(docker-compose -v >/dev/null 2>&1) ; then
     echo "Docker needs to be installed."
     echo ""
-    confirm "Do you want to continue?"
-    install_docker
-    echo ""
-    echo "Reboot required. Once complete rerun the script."
-    echo ""
-    confirm "Do you want to continue?"
-    sudo shutdown --reboot now
+    if confirm "Do you want to continue?"; then
+        install_docker
+        echo ""
+        echo "Reboot required. Once complete rerun the script."
+        echo ""
+        confirm "Do you want to continue?" true
+        sudo shutdown --reboot now
+    fi
 else
     echo "About to install the container for Heimdall"
-    confirm "Do you want to continue?"
-    install_heimdall
+    if confirm "Do you want to continue?"; then
+        install_heimdall
+    fi
 fi
