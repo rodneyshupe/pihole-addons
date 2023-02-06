@@ -58,6 +58,8 @@ function install_padd() {
 }
 
 echo "About to install PADD."
-if confirm "Do you want to continue?" "N"; then
+if confirm "Do you want to continue " "N"; then
     install_padd
+    echo ""
+    echo "For this to fully work a reboot will be required."
 fi
