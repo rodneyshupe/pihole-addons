@@ -130,7 +130,10 @@ function install_npm() {
     # Create .env file
     echo "APPDATA_ROOT=$HOME/.config" >$CONFIG_PATH/.env
 
-    docker-compose -f $CONFIG_PATH/docker-compose.yml --env-file $CONFIG_PATH/.env up -d
+    pwd=$PWD
+    cd "$CONFIG_PATH"
+    docker-compose up -d
+    cd $pwd
 }
 
 echo "About to install the container for Nginx Proxy Manager."

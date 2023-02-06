@@ -151,7 +151,10 @@ function install_heimdall() {
     curl -sSL https://raw.githubusercontent.com/rodneyshupe/pihole-addons/main/heimdall/docker-compose.yml --output $CONFIG_PATH/docker-compose.yml
 
 
-    docker-compose --file $CONFIG_PATH/docker-compose.yml --env-file "$ENV_FILE" up -d
+    pwd=$PWD
+    cd "$CONFIG_PATH"
+    docker-compose up -d
+    cd $pwd
 }
 
 echo "About to install the container for Heimdall"
