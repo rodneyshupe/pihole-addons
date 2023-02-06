@@ -5,6 +5,7 @@ DEFAULT_NEW_PIHOLE_PORT=8000
 function confirm() {
     local prompt="$1"
     local exit_on_no=${2:-false}
+
     read -p "$prompt [Y/n] " answer
     case "$answer" in
         Y|y|"")
@@ -116,32 +117,34 @@ function install_npm() {
     docker-compose -f $CONFIG_PATH/docker-compose.yml --env-file $CONFIG_PATH/.env up -d
 }
 
-
-if ! $(docker-compose -v >/dev/null 2>&1) ; then
-    echo "Docker needs to be installed."
-    echo ""
-    if confirm "Do you want to continue?"; then
-        install_docker
+echo "About to install the container for Nginx Proxy Manager."
+if confirm "Do you want to continue?"; then
+    if ! $(docker-compose -v >/dev/null 2>&1) ; then
+        echo "Docker needs to be installed."
         echo ""
-        echo "Reboot required. Once complete rerun the script."
-        echo ""
-        confirm "Do you want to continue?" true
-        sudo shutdown --reboot now
-    fi
-else
-    echo "Pi-hole interface needs to be moved to a port other than the default of 80."
+        if confirm "Do you want to continue?"; then
+            install_docker
+            echo ""
+            echo "Reboot required. Once complete rerun the script."
+            echo ""
+            confirm "Do you want to continue?" true
+            sudo shutdown --reboot now
+        fi
+    else
+        echo "Pi-hole interface needs to be moved to a port other than the default of 80."
 
-    port=$(get_port)
-    echo
-
-    echo "About to move Pi-Hole administration to port $port"
-    if confirm "Do you want to continue?"; then
-        change_lighttpd_config $port
+        port=$(get_port)
         echo
 
-        echo "About to install the container for Nginx Proxy Manager"
+        echo "About to move Pi-Hole administration to port $port"
         if confirm "Do you want to continue?"; then
-            install_npm
+            change_lighttpd_config $port
+            echo
+
+            echo "About to install the container for Nginx Proxy Manager"
+            if confirm "Do you want to continue?"; then
+                install_npm
+            fi
         fi
     fi
 fi

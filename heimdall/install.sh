@@ -6,6 +6,7 @@ DEFAULT_APP_PORT_SSL=7443
 function confirm() {
     local prompt="$1"
     local exit_on_no=${2:-false}
+    
     read -p "$prompt [Y/n] " answer
     case "$answer" in
         Y|y|"")
@@ -136,20 +137,20 @@ function install_heimdall() {
     docker-compose -f $CONFIG_PATH/docker-compose.yml --env-file "$ENV_FILE" up -d
 }
 
-if ! $(docker-compose -v >/dev/null 2>&1) ; then
-    echo "Docker needs to be installed."
-    echo ""
-    if confirm "Do you want to continue?"; then
-        install_docker
+echo "About to install the container for Heimdall"
+if confirm "Do you want to continue?"; then
+    if ! $(docker-compose -v >/dev/null 2>&1) ; then
+        echo "Docker needs to be installed."
         echo ""
-        echo "Reboot required. Once complete rerun the script."
-        echo ""
-        confirm "Do you want to continue?" true
-        sudo shutdown --reboot now
-    fi
-else
-    echo "About to install the container for Heimdall"
-    if confirm "Do you want to continue?"; then
+        if confirm "Do you want to continue?"; then
+            install_docker
+            echo ""
+            echo "Reboot required. Once complete rerun the script."
+            echo ""
+            confirm "Do you want to continue?" true
+            sudo shutdown --reboot now
+        fi
+    else
         install_heimdall
     fi
 fi
