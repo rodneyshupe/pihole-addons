@@ -46,27 +46,31 @@ function get_port() {
         port=${port:-$default_port}
         if [[ "$port" =~ ^[0-9]+$ ]]; then
             if [ "$port" -eq 80 ] || [ "$port" -eq 443 ]; then
-                echo "Port 80 and 443 are not allowed."
+                echo "Port 80 and 443 are not allowed." >&2
             else
                 if port_in_use $port; then
-                    echo "Port $port is in use. Please choose another port."
+                    echo "Port $port is in use. Please choose another port." >&2
                 else
-                    echo "Selected port: $port"
+                    echo "Selected port: $port" >&2
                     read -p "Is this the correct port? [Y/n] " answer
                     case "$answer" in
                         Y|y|"")
-                            break;;
+                            break
+                            ;;
                         N|n)
-                            continue;;
+                            continue
+                            ;;
                         *)
-                            echo "Invalid response.";;
+                            echo "Invalid response." >&2
+                            ;;
                     esac
                 fi
             fi
         else
-            echo "Invalid port number. Please enter a number."
+            echo "Invalid port number. Please enter a number." >&2
         fi
     done
+    return "$answer"
 }
 
 function install_docker() {
@@ -117,15 +121,14 @@ function install_heimdall() {
     if port_in_use $APP_PORT; then
         echo "Port $APP_PORT is in use. Select a new HTTP port for Heimdall."
         APP_PORT=$(get_port $DEFAULT_APP_PORT)
-    else
-        echo "Using HTTP port $APP_PORT"
     fi
+    echo "Using HTTP port $APP_PORT"
+
     if port_in_use $APP_PORT_SSL; then
         echo "Port $APP_PORT_SSL is in use. Select a new HTTPS port for Heimdall."
         APP_PORT_SSL=$(get_port $DEFAULT_APP_PORT_SSL)
-    else
-        echo "Using HTTPS port $APP_PORT_SSL"
     fi
+    echo "Using HTTPS port $APP_PORT_SSL"
 
     mkdir -p $CONFIG_PATH/data
     # Create .env file
@@ -134,7 +137,8 @@ function install_heimdall() {
 
     curl -sSL https://raw.githubusercontent.com/rodneyshupe/pihole-addons/main/heimdall/docker-compose.yml --output $CONFIG_PATH/docker-compose.yml
 
-    docker-compose -f $CONFIG_PATH/docker-compose.yml --env-file "$ENV_FILE" up -d
+
+    docker-compose --file $CONFIG_PATH/docker-compose.yml --env-file "$ENV_FILE" up -d
 }
 
 echo "About to install the container for Heimdall"

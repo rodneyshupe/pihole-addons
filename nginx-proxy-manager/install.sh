@@ -45,27 +45,31 @@ function get_port() {
         port=${port:-$default_port}
         if [[ "$port" =~ ^[0-9]+$ ]]; then
             if [ "$port" -eq 80 ] || [ "$port" -eq 81 ] || [ "$port" -eq 443 ]; then
-                echo "Port 80, 81 and 443 are not allowed."
+                echo "Port 80, 81 and 443 are not allowed." >&2
             else
                 if port_in_use "$port"; then
-                    echo "Port $port is in use. Please choose another port."
+                    echo "Port $port is in use. Please choose another port." >&2
                 else
-                    echo "Selected port: $port"
+                    echo "Selected port: $port" >&2
                     read -p "Is this the correct port? [Y/n] " answer
                     case "$answer" in
                         Y|y|"")
-                            break;;
+                            break
+                            ;;
                         N|n)
-                            continue;;
+                            continue
+                            ;;
                         *)
-                            echo "Invalid response.";;
+                            echo "Invalid response."
+                            ;;
                     esac
                 fi
             fi
         else
-            echo "Invalid port number. Please enter a number."
+            echo "Invalid port number. Please enter a number." >&2
         fi
     done
+    echo "$answer"
 }
 
 function install_docker() {
