@@ -9,7 +9,3 @@ To execute this script you can either [download](https://raw.githubusercontent.c
 ```sh
 curl https://raw.githubusercontent.com/rodneyshupe/pihole-addons/main/speedtest/setup.sh | bash
 ```
-
-## Credits
-
-Thanks to: [PiMyLife](https://pimylifeup.com/raspberry-pi-internet-speed-monitor/) for the instructions.
