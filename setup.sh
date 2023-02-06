@@ -2,16 +2,21 @@
 
 function confirm() {
     local prompt="$1"
+    local exit_on_no=${2:-false}
     read -p "$prompt [Y/n] " answer
     case "$answer" in
         Y|y|"")
             return 0;;
         N|n)
-            echo "Exiting."
-            exit 1;;
+            if $exit_on_no; then
+                echo "Exit!"
+                exit 1
+            else
+                return 1;;
+            fi
         *)
             echo "Invalid response."
-            confirm "$prompt";;
+            return confirm "$prompt" "$exit_on_no";;
     esac
 }
 

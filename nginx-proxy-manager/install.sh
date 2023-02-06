@@ -12,7 +12,7 @@ function confirm() {
         N|n)
             if $exit_on_no; then
                 echo "Exit!"
-                exit 1;;
+                exit 1
             else
                 return 1;;
             fi
