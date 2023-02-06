@@ -7,21 +7,22 @@ function confirm() {
     local prompt="$1"
     local exit_on_no=${2:-false}
 
-    read -p "$prompt [Y/n] " answer
+    echo -n "$prompt [Y/n] " >&2
+    read answer
     case "$answer" in
         Y|y|"")
             return 0
             ;;
         N|n)
             if $exit_on_no; then
-                echo "Exit!"
+                echo "Exit!" >&2
                 exit 1
             else
                 return 1
             fi
             ;;
         *)
-            echo "Invalid response."
+            echo "Invalid response." >&2
             return confirm "$prompt" "$exit_on_no"
             ;;
     esac
@@ -42,7 +43,8 @@ function get_port() {
     local default_port=${1:-$DEFAULT_APP_PORT}
     local port
     while true; do
-        read -p "Enter port new number [$default_port]: " port
+        echo -n "Enter port new number [$default_port]: " >&2
+        read port
         port=${port:-$default_port}
         if [[ "$port" =~ ^[0-9]+$ ]]; then
             if [ "$port" -eq 80 ] || [ "$port" -eq 443 ]; then
