@@ -4,10 +4,10 @@ This script will install a docker container for [Heimdall](https://heimdall.site
 
 ## Install
 
-To execute this script you can either [download](https://raw.githubusercontent.com/rodneyshupe/setup-pihole-heimdall/main/install.sh) and execute the script. or just execute the following:
+To execute this script you can either [download](https://raw.githubusercontent.com/rodneyshupe/pihole-addons/heimdall/main/install.sh) and execute the script. or just execute the following:
 
 ```sh
-curl https://raw.githubusercontent.com/rodneyshupe/setup-pihole-heimdall/main/install.sh | bash
+curl https://raw.githubusercontent.com/rodneyshupe/pihole-addons/heimdall/main/install.sh | bash
 ```
 
 ### Notes
