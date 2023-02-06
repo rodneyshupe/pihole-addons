@@ -72,7 +72,7 @@ function get_port() {
             echo "Invalid port number. Please enter a number." >&2
         fi
     done
-    return "$answer"
+    return "$port"
 }
 
 function install_docker() {
