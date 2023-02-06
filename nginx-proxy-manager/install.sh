@@ -8,17 +8,20 @@ function confirm() {
     read -p "$prompt [Y/n] " answer
     case "$answer" in
         Y|y|"")
-            return 0;;
+            return 0
+            ;;
         N|n)
             if $exit_on_no; then
                 echo "Exit!"
                 exit 1
             else
-                return 1;;
+                return 1
             fi
+            ;;
         *)
             echo "Invalid response."
-            return confirm "$prompt" "$exit_on_no";;
+            return confirm "$prompt" "$exit_on_no"
+            ;;
     esac
 }
 
