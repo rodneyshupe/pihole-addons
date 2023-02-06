@@ -2,7 +2,7 @@
 
 function run_script() {
     local source=$1
-    local script=${:-$HOME/.scripts/"$(basename "${source%.*}")"_"$(basename "$(dirname "$source")")".sh}
+    local script=${2:-$HOME/.scripts/"$(basename "${source%.*}")"_"$(basename "$(dirname "$source")")".sh}
 
     mkdir -p "$(dirname "$scripts")"
     curl -sSL $source --output $script
