@@ -19,7 +19,7 @@ function confirm() {
     read answer
 
     [[ "$answer" == "" ]] && answer="$default"
-    
+
     case "$answer" in
         Y|y)
             return 0
@@ -83,7 +83,7 @@ function get_port() {
             echo "Invalid port number. Please enter a number." >&2
         fi
     done
-    return "$port"
+    echo "$port"
 }
 
 function install_docker() {
