@@ -4,10 +4,10 @@ This script will install a docker container for [Nginx Proxy Manager](https://ng
 
 ## Install
 
-To execute this script you can either [download](https://raw.githubusercontent.com/rodneyshupe/pihole-addons/main/nginx-proxy-manager/setup.sh) and execute the script. or just execute the following:
+To execute this script you can either [download](https://raw.githubusercontent.com/rodneyshupe/pihole-addons/main/nginx-proxy-manager/install.sh) and execute the script. or just execute the following:
 
 ```sh
-curl https://raw.githubusercontent.com/rodneyshupe/pihole-addons/nginx-proxy-manager/main/install.sh | bash
+curl https://raw.githubusercontent.com/rodneyshupe/pihole-addons/main/nginx-proxy-manager/install.sh | bash
 ```
 
 ### Notes
